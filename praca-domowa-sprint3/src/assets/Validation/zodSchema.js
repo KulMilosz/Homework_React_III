@@ -14,16 +14,16 @@ export const formSchema = z
     form: z.string().min(1, { message: "Wybierz formę nauki." }),
     technology: z
       .array(z.string())
-      .min(1, { message: "Wybierz przynajmniej jedną technologię." }), // Poprawiona walidacja
+      .min(1, { message: "Wybierz przynajmniej jedną technologię." }),
     cv: z
-      .instanceof(FileList)
+      .any()
       .refine(
-        (files) => {
-          if (files && files.length > 0) {
-            const file = files[0];
-            return file.type === "image/jpeg" || file.type === "image/png";
+        (value) => {
+          if (!value || value.length === 0) {
+            return false;
           }
-          return false;
+          const file = value[0];
+          return file.type === "image/jpeg" || file.type === "image/png";
         },
         { message: "Musisz dodać załącznik jako zdjęcie (JPEG lub PNG)." }
       )

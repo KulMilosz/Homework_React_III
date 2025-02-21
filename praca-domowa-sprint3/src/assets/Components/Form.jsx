@@ -22,10 +22,11 @@ import {
 const initialExperiences = { name: "JavaScript", years: "1" };
 
 const Form = ({ onDataUpdate }) => {
-  const { register, handleSubmit, reset, control, formState } = useForm({
+  const { register, handleSubmit, control, formState } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       form: "Online",
+      cv: null,
     },
   });
 
@@ -40,7 +41,6 @@ const Form = ({ onDataUpdate }) => {
   const onSubmit = (data) => {
     onDataUpdate(data);
     console.log(data);
-    reset();
   };
 
   const { fields, append, remove } = useFieldArray({

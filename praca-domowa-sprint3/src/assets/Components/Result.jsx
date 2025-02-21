@@ -6,6 +6,22 @@ import {
 } from "../Styles/ResultStyles";
 
 const Result = ({ userData }) => {
+  const renderCV = () => {
+    if (userData.cv && userData.cv.length > 0) {
+      const cvFile = userData.cv[0];
+
+      if (cvFile.type.startsWith("image")) {
+        return (
+          <img
+            src={URL.createObjectURL(cvFile)}
+            alt="CV"
+            style={{ maxWidth: "100%" }}
+          />
+        );
+      }
+    }
+  };
+
   return (
     <ResultContainer>
       <SectionTitle>Dane osobowe:</SectionTitle>
@@ -35,6 +51,8 @@ const Result = ({ userData }) => {
           <ListItem key={index}>{technology}</ListItem>
         ))}
       </List>
+      <SectionTitle>Curriculum vitae:</SectionTitle>
+      <div>{renderCV()}</div>
     </ResultContainer>
   );
 };
